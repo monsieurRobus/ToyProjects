@@ -13,26 +13,26 @@
                 aaa
             </div>
             <div class="buttons">
-                <button id="clear" class="button">C</button>
-                <button id="sign" class="button">+/-</button>
-                <button id="percentage" class="button">%</button>
-                <button id="divide" class="button">/</button>
-                <button id="" class="button">7</button>
-                <button id="" class="button">8</button>
-                <button id="" class="button">9</button>
-                <button id="" class="button">x</button>
-                <button id="" class="button">4</button>
-                <button id="" class="button">5</button>
-                <button id="" class="button">6</button>
-                <button id="" class="button">-</button>
-                <button id="" class="button">1</button>
-                <button id="" class="button">2</button>
-                <button id="" class="button">3</button>
-                <button id="" class="button">+</button>
-                <button id="" class="button">.</button>
-                <button id="" class="button">0</button>
-                <button id="" class="button">,</button>
-                <button id="" class="button">=</button>
+                <button id="clear" class="button" onclick="Controller.init()">C</button>
+                <button id="sign" class="button" onclick="Controller.handleOperator('sign')">+/-</button>
+                <button id="percentage" class="button" onclick="Controller.handleOperator('%')">%</button>
+                <button id="divide" class="button" onclick="Controller.handleOperator('/')">/</button>
+                <button class="button" onclick="Controller.handleValue(7)">7</button>
+                <button class="button" onclick="Controller.handleValue(8)">8</button>
+                <button class="button" onclick="Controller.handleValue(9)">9</button>
+                <button class="button" onclick="Controller.handleOperator('x')">x</button>
+                <button class="button" onclick="Controller.handleValue(4)">4</button>
+                <button class="button" onclick="Controller.handleValue(5)">5</button>
+                <button class="button" onclick="Controller.handleValue(6)">6</button>
+                <button class="button" onclick="Controller.handleOperator('-')">-</button>
+                <button class="button" onclick="Controller.handleValue(1)">1</button>
+                <button class="button" onclick="Controller.handleValue(2)">2</button>
+                <button class="button" onclick="Controller.handleValue(3)">3</button>
+                <button class="button" onclick="Controller.handleOperator('+')">+</button>
+                <button class="button" onclick="Controller.handleOperator('-')">.</button>
+                <button class="button" onclick="Controller.handleValue(0)">0</button>
+                <button class="button" onclick="Controller.handleComma(true)">,</button>
+                <button class="button" onclick="Controller.exec()">=</button>
                 
             </div>
         </section>
