@@ -1,0 +1,20 @@
+{
+  "name": "hazlo-back",
+  "version": "0.0.1",
+  "description": "backend para el proyecto hazlo, toy project basado en MVVW",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "todo",
+    "tasks"
+  ],
+  "author": "Carlos Díaz Pérez",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2",
+    "sqlite3": "^5.1.7"
+  }
+}
