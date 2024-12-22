@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { Plus, ListPlus, CheckSquare } from 'lucide-react'
 import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,17 +12,21 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 export function FloatingActionButton() {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
   const handleCreateTask = () => {
     // Implementar la lógica para crear una tarea
     console.log("Crear tarea")
+    router.push("/task")
     setIsOpen(false)
   }
 
   const handleCreateList = () => {
     // Implementar la lógica para crear una lista
     console.log("Crear lista")
+    router.push("/tasklist/new")
+
     setIsOpen(false)
   }
 
