@@ -1,7 +1,15 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const port = 3001;
 const dbclient = require('./db/dbclient');
+
+// Configuración de CORS
+app.use(cors({
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

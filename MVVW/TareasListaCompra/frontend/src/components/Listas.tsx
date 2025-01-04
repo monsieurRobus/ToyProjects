@@ -9,7 +9,7 @@ type Props = {
 
 export const Listas = ({taskLists=[]}: Props) => {
   return (
-    <nav className="flex justify-center space-x-4 my-4">
+    <nav className="flex flex-col md:flex-row my-4">
     {taskLists.map((list,index)=>
       <Link href={`/tasklist/${list.id_lista}`} key={index}>
           <Button>{list.nombre_lista}</Button>
