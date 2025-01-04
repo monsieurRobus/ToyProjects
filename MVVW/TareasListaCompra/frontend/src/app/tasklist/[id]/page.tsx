@@ -8,8 +8,8 @@ interface TaskListProps {
 }
 
 
-export default async function Home({params}: { params: { id: string }}) {
-    console.log(params.id)
+export default async function Home(props:Promise<{params:{ id: string }}>) {
+    const { params } = await props
     const tasks = await fetch(`http://localhost:3001/tasklist/${params.id}`).then((res) => res.json())
 
   return (

@@ -1,20 +1,18 @@
 import { FloatingActionButton } from '@/components/FloatingActionButton'
 import { FloatingGenericActionButton } from '@/components/FloatingGenericActionButton'
-import React, { use } from 'react'
+import React from 'react'
 
 type Props = {
     children: React.ReactNode,
-    params: Promise<{ id: string }>
+    params: { id: string }
 }
 
 const layout = async ({children, params}: Props) => {
 
-
-
   return (
     <main>
         <FloatingActionButton />
-        <FloatingGenericActionButton />
+        <FloatingGenericActionButton location={'/tasklist'}/>
         {children}
     </main>
   )

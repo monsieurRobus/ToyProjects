@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useFormStatus } from 'react-dom'
-import { createList } from '@/app/actions'
+import { createList } from '@/services/listServices'
 
 function SubmitButton() {
   const { pending } = useFormStatus()
@@ -35,7 +35,17 @@ export default function CreateListForm() {
         <input
           type="text"
           id="name"
-          name="name"
+          name="name_list"
+          required
+          className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+        />
+        <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+          Descripción
+        </label>
+        <input
+          type="textarea"
+          id="description"
+          name="name_list"
           required
           className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
         />

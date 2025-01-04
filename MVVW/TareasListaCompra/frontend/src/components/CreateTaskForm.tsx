@@ -1,8 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useFormStatus } from 'react-dom'
-import { createTask } from '@/app/actions'
+import { createTask, getLists } from '@/app/actions'
 
 function SubmitButton() {
   const { pending } = useFormStatus()
@@ -19,6 +19,15 @@ function SubmitButton() {
 
 export default function CreateTaskForm() {
   const [message, setMessage] = useState('')
+  const [lists, setLists] = useState<{ id_lista: string; nombre_lista: string }[]>([])
+
+  useEffect(() => {
+    async function fetchLists() {
+      const fetchedLists = await getLists()
+      setLists(fetchedLists)
+    }
+    fetchLists()
+  }, [])
 
   async function handleSubmit(formData: FormData) {
     const result = await createTask(formData)
@@ -42,15 +51,21 @@ export default function CreateTaskForm() {
       </div>
       <div className="mb-4">
         <label htmlFor="listId" className="block text-sm font-medium text-gray-700">
-          ID de la Lista
+          Lista
         </label>
-        <input
-          type="text"
+        <select
           id="listId"
           name="listId"
           required
           className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-        />
+        >
+          <option value="">Selecciona una lista</option>
+          {lists.map((list) => (
+            <option key={list.id_lista} value={list.id_lista}>
+              {list.nombre_lista}
+            </option>
+          ))}
+        </select>
       </div>
       <SubmitButton />
       {message && <p className="mt-4 text-green-600">{message}</p>}

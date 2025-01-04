@@ -9,6 +9,7 @@ export default async function  Page()   {
 
   return (
     <main>
+        <h1 className={'font-semibold text-3xl'}>Listas de tareas</h1>
         <Listas taskLists={taskLists} />
     </main>
   )

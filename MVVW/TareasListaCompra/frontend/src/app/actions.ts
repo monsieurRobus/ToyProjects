@@ -2,6 +2,11 @@
 
 import { revalidatePath } from 'next/cache'
 
+export async function getLists() {
+return await fetch('http://localhost:3001/tasklist').then((res) => res.json())
+
+}
+
 export async function createList(formData: FormData) {
   const name = formData.get('name') as string
   // Aquí normalmente guardarías la lista en una base de datos
