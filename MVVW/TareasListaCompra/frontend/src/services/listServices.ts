@@ -19,7 +19,7 @@ export async function createTask(id:string|number,data: Task) {
 
     console.log(data)
 
-    await httpPost('http://localhost:3001/tasklist/'+id, { nombre_tarea: titulo, completada: false, descripcion: descripcion ?? ''})
+    await httpPost('http://localhost:3001/tasklist/'+id, { titulo: titulo, completada: false, descripcion: descripcion ?? ''})
     
 
     return { message: `Tarea "${titulo}" creada con éxito` }

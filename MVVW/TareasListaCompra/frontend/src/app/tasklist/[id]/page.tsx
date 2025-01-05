@@ -1,17 +1,18 @@
 "use client"
 import { TaskList } from '@/components/TaskList';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import { use } from 'react';
 interface TaskListProps {
-  id: string;
+  params: {
+    id:string
+  }
 }
 
 
 
+export default function Home(props:TaskListProps){
 
-export default async function Home(props:Promise<{params:{ id: string }}>) {
-
-
-    const { params } = await props;
+    const { params } = props;
     const queryClient = new QueryClient();
     const tasks = [];
     

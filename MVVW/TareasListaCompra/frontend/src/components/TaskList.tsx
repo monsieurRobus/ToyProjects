@@ -27,17 +27,20 @@ export const TaskList: React.FC<TaskListProps> = ({ initialTasks, id='1' }) => {
   const {data, isLoading, error, refetch} = useQuery({
     queryKey:['tasks'],
     queryFn: async () => {
-      const response = await fetch('http://localhost:3001/tasklist/1')
+      const response = await fetch('http://localhost:3001/tasklist/'+id)
       return response.json()
     },
     initialData: initialTasks
   });
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTask, setNewTask] = useState<Task>();
-
+  let changeTimer;
   const mutation = useMutation({
     mutationFn: async () => {
       return createTask(id,newTask);
+    },
+    onSuccess: () => {
+      refetch();
     }
   });
   useEffect(() => {
@@ -58,13 +61,17 @@ export const TaskList: React.FC<TaskListProps> = ({ initialTasks, id='1' }) => {
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    
+    clearTimeout(changeTimer);
+    changeTimer = setTimeout(() => {
+      
+      setNewTask({...newTask,[e.target.name]:e.target.value});
+    }, 200);
 
-    setNewTask({
-      titulo: e.target.value,
-      descripcion: '',
-    });
 
   }
+
+
 
   return (
     
@@ -74,7 +81,10 @@ export const TaskList: React.FC<TaskListProps> = ({ initialTasks, id='1' }) => {
         <ActionButton />
       </div>
       <div className={'flex flex-row py-4 gap-2 mb-2'}>
-        <Input onChange={handleChange} placeholder={'Añada tarea'}/>
+        <div className={'flex flex-col gap-2 w-full'}>
+          <Input name='titulo' onChange={handleChange} placeholder={'Añada tarea'}/>
+          <Input name='descripcion' onChange={handleChange} placeholder={'Añada descriptcion'}/>
+        </div>
         <Button onClick={addTask}>Añadir</Button>
       </div>
       {tasks.map(task => (
