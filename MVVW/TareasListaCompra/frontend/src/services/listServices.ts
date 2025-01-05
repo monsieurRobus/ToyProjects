@@ -1,3 +1,4 @@
+import { Task } from "@/types/Task"
 import { httpPost } from "@/utils/httpCalls"
 import { revalidatePath } from "next/cache"
 
@@ -9,4 +10,17 @@ export async function createList(formData: FormData) {
     
 
     return { message: `Lista "${name}" creada con éxito` }
+}
+
+export async function createTask(id:string|number,data: Task) {
+    
+    const titulo: string = data.titulo as string
+    const descripcion: string = data.descripcion as string
+
+    console.log(data)
+
+    await httpPost('http://localhost:3001/tasklist/'+id, { nombre_tarea: titulo, completada: false, descripcion: descripcion ?? ''})
+    
+
+    return { message: `Tarea "${titulo}" creada con éxito` }
 }

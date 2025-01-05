@@ -58,9 +58,70 @@ app.post('/tasklist', (req, res) => {
         return res.status(500).json({ error: 'Error al crear la tarea' });
       }});
 
+   
+
     return res.status(201).json({ message: `Lista ${nombre_lista} creada.` });
     
 });
+app.post('/tasklist/:id', (req, res) => {
+    const id = parseInt(req.params.id, 10);
+    const { titulo, descripcion, completada } = req.body;
+    const fecha = new Date().toISOString().split('T')[0]; // Fecha en formato ISO
+
+    // Validar datos de entrada
+    if (!titulo || !descripcion) {
+        return res.status(400).json({ error: 'Nombre de la tarea y descripción son obligatorios' });
+    }
+
+    // Consultas SQL
+    const insertTareaQuery = `
+        INSERT INTO tareas (titulo, descripcion, completada, fecha_creacion) 
+        VALUES (?, ?, ?, ?);
+    `;
+    const insertListaTareaQuery = `
+        INSERT INTO listas_tareas (id_lista, id_tarea) 
+        VALUES (?, LAST_INSERT_ROWID());
+    `;
+
+    // Manejar la transacción
+    dbclient.serialize(() => {
+        dbclient.run('BEGIN TRANSACTION;', (err) => {
+            if (err) {
+                console.error('Error al iniciar la transacción:', err);
+                return res.status(500).json({ error: 'Error al iniciar la transacción' });
+            }
+        });
+
+        // Insertar tarea
+        dbclient.run(insertTareaQuery, [titulo, descripcion, completada || false, fecha], function (err) {
+            if (err) {
+                console.error('Error al insertar tarea:', err);
+                dbclient.run('ROLLBACK;'); // Cancelar la transacción
+                return res.status(500).json({ error: 'Error al insertar la tarea' });
+            }
+
+            // Insertar relación en listas_tareas
+            dbclient.run(insertListaTareaQuery, [id], (err) => {
+                if (err) {
+                    console.error('Error al insertar en listas_tareas:', err);
+                    dbclient.run('ROLLBACK;'); // Cancelar la transacción
+                    return res.status(500).json({ error: 'Error al insertar en listas_tareas' });
+                }
+
+                // Confirmar la transacción
+                dbclient.run('COMMIT;', (err) => {
+                    if (err) {
+                        console.error('Error al confirmar la transacción:', err);
+                        return res.status(500).json({ error: 'Error al confirmar la transacción' });
+                    }
+
+                    return res.status(201).json({ message: `Tarea "${titulo}" creada.` });
+                });
+            });
+        });
+    });
+});
+
 
 
 // return res.status(200).json({ message: `Nombre lista: ${nombre_lista}` });
